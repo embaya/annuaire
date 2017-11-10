@@ -3,13 +3,18 @@ Annuaire
 
 A Symfony project created on November 9, 2017
 
-First create database 
+Install project with composer 
+
  ```ruby
- bin/console doctrine:database:create
+ composer install
+ ```
+Create database 
+ ```ruby
+ php bin/console doctrine:database:create
  ```
 Update schema
  ```ruby
- bin/console doctrine:schema:update --force 
+ php bin/console doctrine:schema:update --force 
  ```
  
 Add some departements manually
