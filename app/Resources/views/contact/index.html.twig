@@ -65,47 +65,51 @@
     <div class="bs-callout bs-callout-info" id="callout-glyphicons-location">
         <h1>Liste des contacts</h1>
     </div>
-    <table id="contact-list" class="ui celled table" cellspacing="0" width="100%">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Prénom</th>
-            <th>Nom</th>
-            <th>Téléphone fixe</th>
-            <th>Téléphone Portable</th>
-            <th>Département</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for contact in contacts %}
+    {% if contacts|length>0 %}
+        <table id="contact-list" class="ui celled table" cellspacing="0" width="100%">
+            <thead>
             <tr>
-                <td><a href="{{ path('contact_show', { 'id': contact.id }) }}">{{ contact.id }}</a></td>
-                <td>{{ contact.firstname }}</td>
-                <td>{{ contact.lastname }}</td>
-                <td>{{ contact.phone }}</td>
-                <td>{{ contact.portable }}</td>
-                <td>{{ contact.departement.name }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('contact_show', { 'id': contact.id }) }}" title="voir la fiche"
-                               class="btn btn-info"> <span class="glyphicon glyphicon-search"></span></a>
-                        </li>
-                        <li>
-                            &nbsp;
-                        </li>
-                        <li>
-                            <a href="{{ path('contact_edit', { 'id': contact.id }) }}" title="modifier"
-                               class="btn btn-warning"> <span class="glyphicon glyphicon-pencil"></span></a>
-                        </li>
-                    </ul>
-                </td>
+                <th>Id</th>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Téléphone fixe</th>
+                <th>Téléphone Portable</th>
+                <th>Département</th>
+                <th>Actions</th>
             </tr>
-        {% endfor %}
+            </thead>
+            <tbody>
+            {% for contact in contacts %}
+                <tr>
+                    <td><a href="{{ path('contact_show', { 'id': contact.id }) }}">{{ contact.id }}</a></td>
+                    <td>{{ contact.firstname }}</td>
+                    <td>{{ contact.lastname }}</td>
+                    <td>{{ contact.phone }}</td>
+                    <td>{{ contact.portable }}</td>
+                    <td>{{ contact.departement.name }}</td>
+                    <td>
+                        <ul>
+                            <li>
+                                <a href="{{ path('contact_show', { 'id': contact.id }) }}" title="voir la fiche"
+                                   class="btn btn-info"> <span class="glyphicon glyphicon-search"></span></a>
+                            </li>
+                            <li>
+                                &nbsp;
+                            </li>
+                            <li>
+                                <a href="{{ path('contact_edit', { 'id': contact.id }) }}" title="modifier"
+                                   class="btn btn-warning"> <span class="glyphicon glyphicon-pencil"></span></a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning" role="alert">Aucun contact n'a été trouvé!</div>
+    {% endif %}
     <br/>
     <ul>
         <li>
