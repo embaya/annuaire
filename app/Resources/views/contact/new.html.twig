@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block title %}Création d'une fiche{% endblock %}
+{% block body %}
+    <h1>Création d'un nouveau contact</h1>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input type="submit" class="btn pull-right btn-success" value="Créer" />
+    {{ form_end(form) }}
+
+    <br/>
+    <ul>
+        <li>
+            <a href="{{ path('contact_index') }}" title="Retour à liste" class="btn btn-default"><span class="glyphicon glyphicon-circle-arrow-left"></span> Retour à liste</a>
+        </li>
+    </ul>
+{% endblock %}

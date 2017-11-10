@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+{% block title %}Modification d'une fiche{% endblock %}
+{% block body %}
+    <h1>Modifier contact</h1>
+
+    {{ form_start(edit_form) }}
+    {{ form_widget(edit_form) }}
+    <input type="submit" class="btn pull-right btn-success" value="Mettre à jour"/>
+    {{ form_end(edit_form) }}
+
+    <ul>
+        <li>
+            {{ form_start(delete_form) }}
+            <input type="submit" value="Supprimer" class="btn btn-danger">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+    <br/>
+    <br/>
+    <br/>
+    <a href="{{ path('contact_index') }}" title="Retour à liste" class="btn btn-default"><span
+                class="glyphicon glyphicon-circle-arrow-left"></span> Retour à liste</a>
+{% endblock %}

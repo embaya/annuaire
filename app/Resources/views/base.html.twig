@@ -1,13 +1,63 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Annuaire{% endblock %}</title>
+    {% block stylesheets %}
+        <link href="{{ asset('./css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('./css/annuaire.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+        <link href="{{ asset('./css/toastr.min.css') }}" rel="stylesheet">
+    {% endblock %}
+    {% block head %}
+        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    {% endblock %}
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <ul class="nav nav-pills pull-right">
+            <li><a href="{{ path('contact_index') }}">Liste des contacts</a></li>
+            <li><a href="{{ path('contact_new') }}">Nouveau contact</a></li>
+        </ul>
+        <h3 class="text-muted"><a href="{{ path('contact_index') }}"><span style="font-size:1.5em;"
+                                                                           class="glyphicon glyphicon-list-alt"></span>
+                Annuaire</a></h3>
+    </div>
+    <div class="row marketing">
+        {% block body %}
+        {% endblock %}
+    </div>
+
+    <div class="footer">
+        <p>&copy; Majed EMBAYA</p>
+    </div>
+
+</div> <!-- /container -->
+
+{% block javascripts %}{% endblock %}
+<script type="text/javascript" src="{{ asset('./js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('./js/toastr.min.js') }}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout(function () {
+            toastr.options = {
+                closeButton: true,
+                progressBar: true,
+                showMethod: 'slideDown',
+                timeOut: 4000
+            };
+            {% for flashMessage in app.flashes('notice') %}
+            toastr.success('{{ flashMessage|trans }}', 'Annuaire');
+            {% endfor %}
+
+            {% for flashMessage in app.flashes('alert') %}
+            toastr.error('{{ flashMessage|trans }}', 'ATTENTION');
+            {% endfor %}
+
+        }, 1300);
+    });
+</script>
+</body>
 </html>

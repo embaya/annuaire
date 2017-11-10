@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+{% block head %}
+    {{ parent() }}
+    <script src="https://cdn.datatables.net/1.10.6/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.datatables.net/1.10.16/css/dataTables.semanticui.min.css">
+    <script type="text/javascript"
+            src="https://cdn.datatables.net/r/bs-3.3.5/jqc-1.11.3,dt-1.10.8/datatables.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+            $('#contact-list').DataTable({
+                "columnDefs": [
+                    {
+                        "targets": [6],
+                        "sortable": false,
+                        "searchable": false
+                    }
+                ],
+                language: {
+                    processing: "Traitement en cours...",
+                    search: "Rechercher&nbsp;:",
+                    lengthMenu: "Afficher _MENU_ &eacute;l&eacute;ments",
+                    info: "Affichage de l'&eacute;lement _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                    infoEmpty: "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
+                    infoFiltered: "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                    infoPostFix: "",
+                    loadingRecords: "Chargement en cours...",
+                    zeroRecords: "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                    emptyTable: "Aucune donnée disponible dans le tableau",
+                    paginate: {
+                        first: "Premier",
+                        previous: "Pr&eacute;c&eacute;dent",
+                        next: "Suivant",
+                        last: "Dernier"
+                    },
+                    aria: {
+                        sortAscending: ": activer pour trier la colonne par ordre croissant",
+                        sortDescending: ": activer pour trier la colonne par ordre décroissant"
+                    }
+                }
+            });
+        });
+    </script>
+    {# si on veut utiliser ajax pour la pagination
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#contact-list').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": "{{ path('contact_paginate') }}",
+                "sAjaxDataProp": "data",
+                "pageLength": 10,
+                "columns": [
+                    {"data": "id"},
+                    {"data": "name"},
+                    {"data": "created_at"}
+                ]
+            });
+        });
+    </script>#}
+{% endblock %}
+{% block body %}
+    <div class="bs-callout bs-callout-info" id="callout-glyphicons-location">
+        <h1>Liste des contacts</h1>
+    </div>
+    <table id="contact-list" class="ui celled table" cellspacing="0" width="100%">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Téléphone fixe</th>
+            <th>Téléphone Portable</th>
+            <th>Département</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for contact in contacts %}
+            <tr>
+                <td><a href="{{ path('contact_show', { 'id': contact.id }) }}">{{ contact.id }}</a></td>
+                <td>{{ contact.firstname }}</td>
+                <td>{{ contact.lastname }}</td>
+                <td>{{ contact.phone }}</td>
+                <td>{{ contact.portable }}</td>
+                <td>{{ contact.departement.name }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('contact_show', { 'id': contact.id }) }}" title="voir la fiche"
+                               class="btn btn-info"> <span class="glyphicon glyphicon-search"></span></a>
+                        </li>
+                        <li>
+                            &nbsp;
+                        </li>
+                        <li>
+                            <a href="{{ path('contact_edit', { 'id': contact.id }) }}" title="modifier"
+                               class="btn btn-warning"> <span class="glyphicon glyphicon-pencil"></span></a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    <br/>
+    <ul>
+        <li>
+            <a href="{{ path('contact_new') }}" title="Ajouter" class="btn btn-success"> <span
+                        class="glyphicon glyphicon-plus"></span> Nouveau contact</a>
+
+        </li>
+    </ul>
+{% endblock %}
